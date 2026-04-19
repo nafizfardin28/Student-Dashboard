@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id                        String           @id @default(cuid())
+  firstName                 String
+  lastName                  String
+  email                     String           @unique
+  avatarUrl                 String?
+  academicYear              AcademicYear
+  major                     String
+  gpa                       Float
+  enrollmentStatus          EnrollmentStatus
+  creditsCompleted          Int
+  creditsRequired           Int
+  expectedGraduation        DateTime
+  firstGeneration           Boolean          @default(false)
+  lowIncome                 Boolean          @default(false)
+  underrepresentedMinority  Boolean          @default(false)
+  createdAt                 DateTime         @default(now())
+  updatedAt                 DateTime         @updatedAt
+
+  scholarships              Scholarship[]
+  meetings                  Meeting[]
+}
+
+model Scholarship {
+  id              String             @id @default(cuid())
+  studentId       String
+  name            String
+  provider        String
+  amount          Float
+  currency        String
+  status          ScholarshipStatus
+  requirements    String? 
+  deadline        DateTime
+  essayRequired   Boolean            @default(false)
+  essaySubmitted  Boolean            @default(false)
+  notes           String?
+  dateApplied     DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  student         Student            @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model Mentor {
+  id           String     @id @default(cuid())
+  name         String
+  title        String
+  company      String
+  expertise    String[]
+  email        String     @unique
+  bio          String?
+  maxMentees   Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  meetings     Meeting[]
+}
+
+model Meeting {
+  id          String        @id @default(cuid())
+  studentId   String
+  mentorId    String
+  date        DateTime
+  duration    Int
+  notes       String?
+  actionItems String[]
+  status      MeetingStatus
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  student     Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  mentor      Mentor        @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+}
+
+enum AcademicYear {
+  FRESHMAN
+  SOPHOMORE
+  JUNIOR
+  SENIOR
+}
+
+enum EnrollmentStatus {
+  FULL_TIME
+  PART_TIME
+  LEAVE_OF_ABSENCE
+  GRADUATED
+}
+
+enum ScholarshipStatus {
+  RESEARCHING
+  APPLIED
+  INTERVIEW
+  AWARDED
+  REJECTED
+}
+
+enum MeetingStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
