@@ -19,7 +19,7 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.get("/", (_req, res) => {
-  res.send("Student Dashboard API is running 🚀");
+  res.json({ success: true, message: "API is running" });
 });
 
 app.use("/api/students", studentRoutes);
