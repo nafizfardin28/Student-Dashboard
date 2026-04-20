@@ -70,13 +70,18 @@ router.put("/:id", async (req, res) => {
       data: meeting
     });
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to update meeting",
-     error: error?.message || "Unknown error"
-    });
+  } catch (error: unknown) {
+  console.error("MEETING UPDATE ERROR:", error);
+
+  const errorMessage =
+    error instanceof Error ? error.message : "Unknown error";
+
+  return res.status(500).json({
+    success: false,
+    message: "Failed to update meeting",
+    error: errorMessage,
+  });
   }
 });
+
 export default router;
