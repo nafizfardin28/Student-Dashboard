@@ -9,7 +9,7 @@ type Mentor = {
 };
 
 export default function AddMeetingForm({ studentId }: { studentId: string }) {
-  const [notes, setNotes] = useState("");
+  
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [form, setForm] = useState({
     mentorId: "",
@@ -102,7 +102,7 @@ export default function AddMeetingForm({ studentId }: { studentId: string }) {
 
       <textarea
         placeholder="Meeting notes (discussion topics, goals, etc.)"
-        value={notes}
+        value={form.notes}
         onChange={(e) => setForm({ ...form, notes: e.target.value })}
         className="w-full border p-2 rounded"
       />
