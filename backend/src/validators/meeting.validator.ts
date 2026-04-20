@@ -15,4 +15,5 @@ export const updateMeetingSchema = z.object({
   date: z.string().optional(),
   duration: z.number().optional(),
   notes: z.string().optional(),
+  mentorId: z.string().optional()
 });
