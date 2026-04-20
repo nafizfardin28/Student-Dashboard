@@ -75,7 +75,7 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to update meeting",
-      error: error instanceof Error ? error.message : "Unknown error"
+     error: error?.message || "Unknown error"
     });
   }
 });
