@@ -6,20 +6,23 @@ const router = Router();
 router.get("/", async (_req: Request, res: Response) => {
   try {
     const mentors = await prisma.mentor.findMany({
-      orderBy: { name: "asc" }
+      orderBy: { name: "asc" },
     });
 
-    res.json({ success: true, data: mentors });
+    res.json({
+      success: true,
+      data: mentors,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Failed to fetch mentors"
+      message: "Failed to fetch mentors",
     });
   }
 });
 
-router.post("/setup-demo", async (_req: Request, res: Response) => {
+router.get("/setup-demo", async (_req: Request, res: Response) => {
   try {
     const existing = await prisma.mentor.findMany();
 
@@ -33,7 +36,7 @@ router.post("/setup-demo", async (_req: Request, res: Response) => {
             expertise: ["Mentoring", "Research"],
             email: "hasan@example.com",
             bio: "Senior academic mentor",
-            maxMentees: 10
+            maxMentees: 10,
           },
           {
             name: "Dr. Ayesha",
@@ -42,22 +45,25 @@ router.post("/setup-demo", async (_req: Request, res: Response) => {
             expertise: ["Career Growth", "Scholarships"],
             email: "ayesha@example.com",
             bio: "Research and scholarship mentor",
-            maxMentees: 8
-          }
-        ]
+            maxMentees: 8,
+          },
+        ],
       });
     }
 
     const mentors = await prisma.mentor.findMany({
-      orderBy: { name: "asc" }
+      orderBy: { name: "asc" },
     });
 
-    res.json({ success: true, data: mentors });
+    res.json({
+      success: true,
+      data: mentors,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Failed to create demo mentors"
+      message: "Failed to create demo mentors",
     });
   }
 });
