@@ -254,8 +254,8 @@ student-dashboard/
 │   └── index.html
 │
 ├── README.md
-├── AI.md
-├── prompt.md
+├── AI_REVIEW.md
+├── PROMPTS.md
 └── .gitignore
 ```
 
