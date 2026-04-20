@@ -6,7 +6,16 @@ import meetingRoutes from "./routes/meeting.routes";
 import mentorRoutes from "./routes/mentor.routes";
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", 
+      "https://student-dashboard-pi-one.vercel.app" 
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
