@@ -1,6 +1,6 @@
 import { useState } from "react";
 import EditMeetingForm from "./EditMeetingForm";
-
+import api from "../api/client";
 type Meeting = {
   id: string;
   mentorId?: string;
@@ -35,31 +35,16 @@ export default function MeetingSection({ meetings }: Props) {
     }
   };
 
-  const handleStatusChange = async (id: string, status: string) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/meetings/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
+ const handleStatusChange = async (id: string, status: string) => {
+  try {
+    await api.put(`/meetings/${id}`, { status });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Update failed");
-      }
-
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to update meeting status:", error);
-      alert("Failed to update meeting status");
-    }
-  };
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to update meeting status");
+  }
+};;
 
   const filteredMeetings = meetings
     .filter((m) => {
