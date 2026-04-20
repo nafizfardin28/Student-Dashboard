@@ -10,4 +10,9 @@ export const createMeetingSchema = z.object({
   notes: z.string().optional()
 });
 
-export const updateMeetingSchema = createMeetingSchema.partial();
+export const updateMeetingSchema = z.object({
+  status: z.enum(["SCHEDULED", "COMPLETED", "CANCELLED"]).optional(),
+  date: z.string().optional(),
+  duration: z.number().optional(),
+  notes: z.string().optional(),
+});

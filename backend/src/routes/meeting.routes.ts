@@ -69,6 +69,7 @@ router.put("/:id", async (req, res) => {
       success: true,
       data: meeting
     });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -77,5 +78,4 @@ router.put("/:id", async (req, res) => {
     });
   }
 });
-
 export default router;
